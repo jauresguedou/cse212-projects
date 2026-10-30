@@ -15,16 +15,18 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        // I created the empty array to store the multiple.
+        // I created the empty array to store the multiples of the number.
         double [] result = new double[length];
-        // I declared a variable.
+
+        // I declared a variable to store calculation result between the number and the length data.
         double multiplication;
+
         // I used a for loop to itirate throuh the length for multiplication and addition to the array.
         for(int i= 1; i <= length; i++)
         {
-            // Calculate the number multiples
+            // Calculate the number multiples 
             multiplication = i*number;
-            // Assign each multiple a position
+            // Assign each multiple a position into resulted array.
             result[i-1] = multiplication;
         }
 
@@ -48,20 +50,21 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        // Identify how many elements are in the original list.
+        // Identify how many elements are in the original list of data by using Count method.
 
         int  totalElement = data.Count;
-        // Identify the position from where numbers should be moved
+        // Identify the starting point or the position from where numbers should be moved.
         int   startPosition = totalElement - amount;
-        // Store the numbers we had to move for a moment.
+
+        // Store temporarily the numbers we had to move into a variable.
 
         List<int> temporaryData = data.GetRange(startPosition,amount);
 
-        //Remove the stored numbers from the list
+        //Remove the stored numbers from the  original list.
 
         data.RemoveRange(startPosition,amount);    
         
-        // Insert the temporarily stored data 
+        // Insert the temporarily stored data at the beginning of the list
         data.InsertRange(0,temporaryData);
 
     }
