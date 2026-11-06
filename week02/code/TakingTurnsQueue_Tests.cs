@@ -11,7 +11,7 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Bob (2), Tim (5), Sue (3) and
     // run until the queue is empty
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
-    // Defect(s) Found: Assert.AreEqual failed. Expected:<Bob>. Actual:<Sue>.
+    // Defect(s) Found: Assert.AreEqual failed. Expected:<Bob>. Actual:<Sue>.(The original implementation incorrectly returned a person to the queue after their final turn.)
     public void TestTakingTurnsQueue_FiniteRepetition()
     {
         var bob = new Person("Bob", 2);
@@ -43,7 +43,7 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Bob (2), Tim (5), Sue (3)
     // After running 5 times, add George with 3 turns.  Run until the queue is empty.
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, George, Sue, Tim, George, Tim, George
-    // Defect(s) Found: Assert.AreEqual failed. Expected:<Bob>. Actual:<Sue>.
+    // Defect(s) Found: Assert.AreEqual failed. Expected:<Bob>. Actual:<Sue>.(PersonQueue.Enqueue() inserted new people at the beginning of the queue instead of at the end, which caused the order of people in the queue to be reversed.)
     public void TestTakingTurnsQueue_AddPlayerMidway()
     {
         var bob = new Person("Bob", 2);
@@ -85,7 +85,7 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Bob (2), Tim (Forever), Sue (3)
     // Run 10 times.
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
-    // Defect(s) Found: Assert.AreEqual failed. Expected:<Bob>. Actual:<Sue>.
+    // Defect(s) Found: Assert.AreEqual failed. Expected:<Bob>. Actual:<Sue>.(The original implementation incorrectly decreased the turn count of people with zero or negative turns.)
     public void TestTakingTurnsQueue_ForeverZero()
     {
         var timTurns = 0;
@@ -116,7 +116,7 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Tim (Forever), Sue (3)
     // Run 10 times.
     // Expected Result: Tim, Sue, Tim, Sue, Tim, Sue, Tim, Tim, Tim, Tim
-    // Defect(s) Found:  Assert.AreEqual failed. Expected:<Tim>. Actual:<Sue>. 
+    // Defect(s) Found:  Assert.AreEqual failed. Expected:<Tim>. Actual:<Sue>.(The original implementation incorrectly decreased the turn count of people with negative turns. Negative turn values represent unlimited turns, so their turn count should remain unchanged, and they should stay in the queue indefinitely.)
     public void TestTakingTurnsQueue_ForeverNegative()
     {
         var timTurns = -3;
