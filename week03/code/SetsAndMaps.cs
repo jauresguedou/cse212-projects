@@ -22,7 +22,21 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var wordSet = new HashSet<String>(words);
+        var pairs = new List<string>();
+        string firstLetter;
+        string secondLetter;
+        foreach (var word in words)
+        {
+            firstLetter = word[0].ToString();
+            secondLetter = word[1].ToString();
+            if (wordSet.Contains(secondLetter + firstLetter) && firstLetter != secondLetter && string.CompareOrdinal(word, secondLetter + firstLetter) < 0)
+            {
+                pairs.Add(word + "  &  " + secondLetter + firstLetter);
+            }
+        }
+       
+        return pairs.ToArray();
     }
 
     /// <summary>
@@ -43,6 +57,15 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+            var degree = fields[3];
+            if (degrees.ContainsKey(degree))
+            {
+                degrees[degree]++;
+            }
+            else
+            {
+                degrees[degree] = 1;
+            }
         }
 
         return degrees;
@@ -66,8 +89,42 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
+        var letterCount = new Dictionary<char, int>();
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        word1 = word1.ToLower().Replace(" ", "");
+        word2 = word2.ToLower().Replace(" ", "");
+        if(word1.Length != word2.Length)
+        {
+            return false;
+        }
+        foreach (var letter in word1)
+        {
+            if (letterCount.ContainsKey(letter))
+            {
+                letterCount[letter]++;
+            }
+            else
+            {
+                letterCount[letter] = 1;
+            }
+        }
+
+        foreach (var letter in word2)
+        {
+            if (letterCount.ContainsKey(letter))
+            {
+                if(letterCount[letter] == 0)
+                {
+                    return false;
+                }
+                letterCount[letter]--;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /// <summary>
