@@ -27,10 +27,22 @@ public class Basketball
             var fields = reader.ReadFields()!;
             var playerId = fields[0];
             var points = int.Parse(fields[8]);
+            //  use a Map to determine the total points for each player.
+            if (players.ContainsKey(playerId))
+            {
+                players[playerId] += points;
+            }
+            else
+            {
+                players[playerId ] = points;
+            }
+
         }
+        
 
-        Console.WriteLine($"Players: {{{string.Join(", ", players)}}}");
 
-        var topPlayers = new string[10];
+        // Console.WriteLine($"Players: {{{string.Join(", ", players)}}}");
+
+        var topPlayers = players.ToArray();
     }
 }
